@@ -33,7 +33,16 @@ namespace AppLayer.PathComponents
             if (node == null) return;
             lock (_mylock)
             {
-                _nodes.Add(node);
+                if (_nodes.Count == 0) 
+                {
+                    _nodes.Add(node);
+                }
+                else 
+                {
+                    var prev = _nodes[_nodes.Count - 1];
+                    prev.next = node.position;
+                    _nodes.Add(node);
+                }
                 IsDirty = true;
             }
         }
@@ -42,6 +51,25 @@ namespace AppLayer.PathComponents
             lock(_mylock)
             {
                 _nodes.Clear();
+                IsDirty = true;
+            }
+        }
+        public void ToggleLoop()
+        {
+            lock(_mylock)
+            {
+                if (_nodes.Count == 0) return;
+                var last = _nodes[_nodes.Count - 1];
+                var first = _nodes[0];
+                if (last.next == last.position) 
+                {
+                    last.next = first.position;
+                }
+                else
+                {
+                    last.next = last.position;
+                }
+                _nodes[_nodes.Count - 1] = last;
                 IsDirty = true;
             }
         }

@@ -82,6 +82,7 @@
             btnToggleLoop.Name = "btnToggleLoop";
             btnToggleLoop.Size = new Size(50, 50);
             btnToggleLoop.Text = "Toggle Loop";
+            btnToggleLoop.Click += btnToggleLoop_Click;
             // 
             // MainForm
             // 
