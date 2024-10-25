@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,12 +16,11 @@ namespace AppLayer.PathComponents
         public List<Arc> arcs = new List<Arc>();
 
         public Bitmap icon;
-        public Node() 
+        public Node(Point position) 
         {
-            using (var ms = new MemoryStream(Properties.Resources.icon))
-            {
-                icon = new Bitmap(ms);
-            }
+            this.position = position;
+            icon = new Bitmap(@"C:\Users\3tfer\source\repos\ASI-Curves-GUI\ASI-Curves-GUI\Graphics\icon.png");
+
         }
 
         public static Pen RegularPen { get; set; } = new Pen(Color.Black);

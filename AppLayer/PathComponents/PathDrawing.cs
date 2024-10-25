@@ -28,5 +28,14 @@ namespace AppLayer.PathComponents
             }
             return true;
         }
+        public void Add(Node node)
+        {
+            if (node == null) return;
+            lock (_mylock)
+            {
+                _nodes.Add(node);
+                IsDirty = true;
+            }
+        }
     }
 }

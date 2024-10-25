@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace AppLayer.Commands
 {
     public class NewNodeCommand : Command
@@ -18,7 +19,9 @@ namespace AppLayer.Commands
         }
         public override bool Execute()
         {
-            throw new NotImplementedException();
+            if (TargetDrawing == null) return false;
+            TargetDrawing.Add(new PathComponents.Node(_position));
+            return true;
         }
     }
 }

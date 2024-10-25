@@ -37,13 +37,13 @@ namespace ASI_Curves_GUI
 
             _invoker.Start();
 
-            Console.WriteLine("CONSOLE OUT");
+            System.Diagnostics.Debug.WriteLine("CONSOLE OUT");
 
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            ComputeDrawingPanelSize();
+            //ComputeDrawingPanelSize();
             refreshTimer.Start();
         }
 
@@ -88,29 +88,15 @@ namespace ASI_Curves_GUI
 
         private void drawingPanel_MouseUp(object sender, MouseEventArgs e)
         {
-            switch (_mode)
+            if (Control.ModifierKeys == Keys.Shift)
             {
-                case PossibleModes.Dragging:
-                    break;
-                case PossibleModes.Placing:
-                    CommandFactory.Instance.CreateAndDo("newnode", e.Location);
-                    break;
+                CommandFactory.Instance.CreateAndDo("newnode", e.Location);
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Tried Dragging");
             }
         }
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            switch (keyData)
-            {
-                case Keys.ShiftKey:
-                    _mode = PossibleModes.Placing;
-                    Console.WriteLine("Switch to placing");
-                    break;
-                default:
-                    _mode = PossibleModes.Dragging;
-                    Console.WriteLine("Switch to dragging");
-                    break;
-            }
-            return true;
-        }
+        
     }
 }
