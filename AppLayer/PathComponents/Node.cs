@@ -19,7 +19,11 @@ namespace AppLayer.PathComponents
         public Node(Point position) 
         {
             this.position = position;
-            icon = new Bitmap(@"C:\Users\3tfer\source\repos\ASI-Curves-GUI\ASI-Curves-GUI\Graphics\icon.png");
+            using (MemoryStream ms = new MemoryStream(AppLayer.Properties.Resources.icon))
+            {
+                icon = new Bitmap(ms);
+                icon = new Bitmap(icon, new Size(icon.Width / 4, icon.Height / 4));
+            }
 
         }
 

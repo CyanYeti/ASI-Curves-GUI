@@ -44,6 +44,9 @@ namespace AppLayer.Commands
                 case "NEWNODE":
                     command = new NewNodeCommand(commandParameters);
                     break;
+                case "CLEAR":
+                    command = new ClearCommand(commandParameters);
+                    break;
             }
 
             if (command != null)

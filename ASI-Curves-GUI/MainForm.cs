@@ -97,6 +97,10 @@ namespace ASI_Curves_GUI
                 System.Diagnostics.Debug.WriteLine("Tried Dragging");
             }
         }
-        
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            CommandFactory.Instance.CreateAndDo("clear");
+        }
     }
 }

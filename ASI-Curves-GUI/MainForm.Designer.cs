@@ -70,6 +70,7 @@
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(50, 50);
             btnClear.Text = "Clear";
+            btnClear.Click += btnClear_Click;
             // 
             // btnToggleLoop
             // 

@@ -37,5 +37,13 @@ namespace AppLayer.PathComponents
                 IsDirty = true;
             }
         }
+        public void Clear()
+        {
+            lock(_mylock)
+            {
+                _nodes.Clear();
+                IsDirty = true;
+            }
+        }
     }
 }
