@@ -86,10 +86,14 @@ namespace ASI_Curves_GUI
             ComputeDrawingPanelSize();
         }
 
+        private Point _startPosition;
         private void drawingPanel_MouseUp(object sender, MouseEventArgs e)
         {
             if (Control.ModifierKeys == Keys.Shift)
             {
+                var radian = Math.Atan2((e.Location.X - _startPosition.X), (e.Location.Y - _startPosition.Y));
+                System.Diagnostics.Debug.WriteLine(radian.ToString());
+
                 CommandFactory.Instance.CreateAndDo("newnode", e.Location);
             }
             else
@@ -97,10 +101,19 @@ namespace ASI_Curves_GUI
                 System.Diagnostics.Debug.WriteLine("Tried Dragging");
             }
         }
+        private void drawingPanel_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (Control.ModifierKeys == Keys.Shift)
+            {
+                _startPosition = e.Location;
+            }
+        }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
             CommandFactory.Instance.CreateAndDo("clear");
         }
+
+        
     }
 }

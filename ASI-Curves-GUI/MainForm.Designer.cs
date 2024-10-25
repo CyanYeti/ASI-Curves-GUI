@@ -45,6 +45,7 @@
             drawingPanel.Name = "drawingPanel";
             drawingPanel.Size = new Size(800, 398);
             drawingPanel.TabIndex = 3;
+            drawingPanel.MouseDown += drawingPanel_MouseDown;
             drawingPanel.MouseUp += drawingPanel_MouseUp;
             // 
             // refreshTimer
