@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using AppLayer.Commands;
 using AppLayer.PathComponents;
 
 namespace ASI_Curves_GUI
@@ -8,18 +9,41 @@ namespace ASI_Curves_GUI
     {
         private readonly PathDrawing _pathDrawing;
         private bool _forceRedraw;
+        private readonly Invoker _invoker;
 
-        private Bitmap _imageBuffer;
+        private enum PossibleModes
+        {
+            Dragging,
+            Placing
+        }
+
+        private PossibleModes _mode = PossibleModes.Dragging;
+
+        private Bitmap? _imageBuffer;
         private Graphics _imageBufferGraphics;
         private Graphics _panelGraphics;
+
+
 
         public MainForm()
         {
             InitializeComponent();
+
+            _pathDrawing = new PathDrawing();
+            _invoker = new Invoker();
+
+            CommandFactory.Instance.TargetDrawing = _pathDrawing;
+            CommandFactory.Instance.Invoker = _invoker;
+
+            _invoker.Start();
+
+            Console.WriteLine("CONSOLE OUT");
+
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            ComputeDrawingPanelSize();
             refreshTimer.Start();
         }
 
@@ -43,6 +67,50 @@ namespace ASI_Curves_GUI
             }
 
             _forceRedraw = false;
+        }
+        private void ComputeDrawingPanelSize()
+        {
+            var width = Width;
+            var height = Height - menuStrip.Height;
+
+            drawingPanel.Size = new Size(width, height);
+            drawingPanel.Location = new Point(0, menuStrip.Height);
+
+            _imageBuffer = null;
+
+            _forceRedraw = true;
+        }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            ComputeDrawingPanelSize();
+        }
+
+        private void drawingPanel_MouseUp(object sender, MouseEventArgs e)
+        {
+            switch (_mode)
+            {
+                case PossibleModes.Dragging:
+                    break;
+                case PossibleModes.Placing:
+                    CommandFactory.Instance.CreateAndDo("newnode", e.Location);
+                    break;
+            }
+        }
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            switch (keyData)
+            {
+                case Keys.ShiftKey:
+                    _mode = PossibleModes.Placing;
+                    Console.WriteLine("Switch to placing");
+                    break;
+                default:
+                    _mode = PossibleModes.Dragging;
+                    Console.WriteLine("Switch to dragging");
+                    break;
+            }
+            return true;
         }
     }
 }

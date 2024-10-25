@@ -29,75 +29,80 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            btnClear = new Button();
-            btnToggleLoop = new Button();
-            panel1 = new Panel();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             drawingPanel = new Panel();
             refreshTimer = new System.Windows.Forms.Timer(components);
-            panel1.SuspendLayout();
+            menuStrip = new ToolStrip();
+            btnClear = new ToolStripButton();
+            btnToggleLoop = new ToolStripButton();
+            menuStrip.SuspendLayout();
             SuspendLayout();
-            // 
-            // btnClear
-            // 
-            btnClear.Location = new Point(3, 12);
-            btnClear.Name = "btnClear";
-            btnClear.Size = new Size(96, 23);
-            btnClear.TabIndex = 0;
-            btnClear.Text = "Clear";
-            btnClear.UseVisualStyleBackColor = true;
-            // 
-            // btnToggleLoop
-            // 
-            btnToggleLoop.Location = new Point(3, 41);
-            btnToggleLoop.Name = "btnToggleLoop";
-            btnToggleLoop.Size = new Size(96, 23);
-            btnToggleLoop.TabIndex = 1;
-            btnToggleLoop.Text = "Toggle Loop";
-            btnToggleLoop.UseVisualStyleBackColor = true;
-            // 
-            // panel1
-            // 
-            panel1.BackColor = Color.FromArgb(0, 64, 64);
-            panel1.Controls.Add(btnClear);
-            panel1.Controls.Add(btnToggleLoop);
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(102, 452);
-            panel1.TabIndex = 2;
             // 
             // drawingPanel
             // 
             drawingPanel.BackColor = Color.FromArgb(224, 224, 224);
-            drawingPanel.Location = new Point(120, 12);
+            drawingPanel.Location = new Point(0, 53);
             drawingPanel.Name = "drawingPanel";
-            drawingPanel.Size = new Size(668, 426);
+            drawingPanel.Size = new Size(800, 398);
             drawingPanel.TabIndex = 3;
+            drawingPanel.MouseUp += drawingPanel_MouseUp;
             // 
             // refreshTimer
             // 
-            refreshTimer.Tick += this.refreshTimer_Tick;
+            refreshTimer.Tick += refreshTimer_Tick;
+            // 
+            // menuStrip
+            // 
+            menuStrip.AutoSize = false;
+            menuStrip.Items.AddRange(new ToolStripItem[] { btnClear, btnToggleLoop });
+            menuStrip.Location = new Point(0, 0);
+            menuStrip.Name = "menuStrip";
+            menuStrip.Size = new Size(800, 50);
+            menuStrip.TabIndex = 4;
+            menuStrip.Text = "toolStrip1";
+            // 
+            // btnClear
+            // 
+            btnClear.AutoSize = false;
+            btnClear.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            btnClear.Image = (Image)resources.GetObject("btnClear.Image");
+            btnClear.ImageTransparentColor = Color.Magenta;
+            btnClear.Name = "btnClear";
+            btnClear.Size = new Size(50, 50);
+            btnClear.Text = "Clear";
+            // 
+            // btnToggleLoop
+            // 
+            btnToggleLoop.AutoSize = false;
+            btnToggleLoop.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            btnToggleLoop.Image = (Image)resources.GetObject("btnToggleLoop.Image");
+            btnToggleLoop.ImageTransparentColor = Color.Magenta;
+            btnToggleLoop.Name = "btnToggleLoop";
+            btnToggleLoop.Size = new Size(50, 50);
+            btnToggleLoop.Text = "Toggle Loop";
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(menuStrip);
             Controls.Add(drawingPanel);
-            Controls.Add(panel1);
             Name = "MainForm";
             Text = "Form1";
             Load += MainForm_Load;
-            panel1.ResumeLayout(false);
+            Resize += MainForm_Resize;
+            menuStrip.ResumeLayout(false);
+            menuStrip.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
-
-        private Button btnClear;
-        private Button btnToggleLoop;
-        private Panel panel1;
         private Panel panel2;
         private Panel drawingPanel;
         private System.Windows.Forms.Timer refreshTimer;
+        private ToolStrip menuStrip;
+        private ToolStripButton btnClear;
+        private ToolStripButton btnToggleLoop;
     }
 }

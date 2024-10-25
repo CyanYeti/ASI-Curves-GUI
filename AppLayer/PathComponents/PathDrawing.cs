@@ -10,6 +10,7 @@ namespace AppLayer.PathComponents
     {
         private readonly List<Node> _nodes = new List<Node>();
         private readonly object _mylock = new object();
+        public bool IsDirty { get; set; }
         public bool Draw(Graphics graphics, bool forceRedraw = false)
         {
             lock (_mylock)
@@ -23,6 +24,7 @@ namespace AppLayer.PathComponents
                 {
                     n.Draw(graphics);
                 }
+                IsDirty = false;
             }
             return true;
         }

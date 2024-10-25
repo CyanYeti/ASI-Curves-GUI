@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AppLayer.PathComponents
 {
-    internal class Arc
+    public class Arc
     {
         public Point position;
     }

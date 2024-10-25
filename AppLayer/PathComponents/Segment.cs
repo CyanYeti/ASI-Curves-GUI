@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AppLayer.PathComponents
 {
-    internal class Segment
+    public class Segment
     {
         public Point position;
         public double heading;
