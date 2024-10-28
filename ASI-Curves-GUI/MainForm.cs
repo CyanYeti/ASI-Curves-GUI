@@ -91,10 +91,11 @@ namespace ASI_Curves_GUI
         {
             if (Control.ModifierKeys == Keys.Shift)
             {
-                var radian = Math.Atan2((e.Location.X - _startPosition.X), (e.Location.Y - _startPosition.Y));
-                System.Diagnostics.Debug.WriteLine(radian.ToString());
-
-                CommandFactory.Instance.CreateAndDo("newnode", e.Location);
+                double dx = e.Location.X - _startPosition.X;
+                double dy = e.Location.Y - _startPosition.Y;
+                // Atan2 takes dy as first argument. negative to convert from screen to map coordinates
+                double radian = Math.Atan2(-dy, dx);
+                CommandFactory.Instance.CreateAndDo("newnode", _startPosition, radian);
             }
             else
             {
@@ -113,7 +114,10 @@ namespace ASI_Curves_GUI
         {
             CommandFactory.Instance.CreateAndDo("clear");
         }
-
+        private void btnToggleLoop_Click(object sender, EventArgs e)
+        {
+            CommandFactory.Instance.CreateAndDo("loop");
+        }
         
     }
 }

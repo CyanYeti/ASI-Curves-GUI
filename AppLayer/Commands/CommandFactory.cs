@@ -47,6 +47,9 @@ namespace AppLayer.Commands
                 case "CLEAR":
                     command = new ClearCommand(commandParameters);
                     break;
+                case "LOOP":
+                    command = new LoopCommand(commandParameters);
+                    break;
             }
 
             if (command != null)
