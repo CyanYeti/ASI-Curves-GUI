@@ -1,8 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,10 +13,9 @@ namespace AppLayer.PathComponents
     public class Node
     {
         public Point position;
-        public Point next;
         public double heading;
         public double curvature;
-        public List<Segment> segments = new List<Segment>();
+        public bool arc_constraint = false; 
         public List<Arc> arcs = new List<Arc>();
 
         public Bitmap icon;
@@ -22,7 +23,6 @@ namespace AppLayer.PathComponents
         {
             this.heading = heading;
             this.position = position;
-            this.next = position;
             using (MemoryStream ms = new MemoryStream(AppLayer.Properties.Resources.icon))
             {
                 icon = new Bitmap(ms);
@@ -36,16 +36,21 @@ namespace AppLayer.PathComponents
         {
             if (graphics == null) return;
             // Draw the node point, pointing to heading
-            var rotated = RotateImage(icon, heading * (180/Math.PI));
-            graphics.DrawImage(rotated, position.X - icon.Width / 2, position.Y - icon.Height / 2);
-
-            // draw the path originating at this node if exists
-            // DrawArcBetweenTwoPoints(graphics, RegularPen, (PointF)position, new PointF(100,100), 100);
-            if (next != position) 
+            int x = position.X;
+            int y = -position.Y; // Transform from map to screen
+            var rotated = RotateImage(icon, (Math.PI/2 - heading) * (180/Math.PI));
+            graphics.DrawImage(rotated, x - icon.Width / 2, y - icon.Height / 2);
+            foreach (var arc in arcs)
             {
-                DrawBezierCurve(RegularPen, graphics);
+                arc.Draw(RegularPen, graphics);
+                if (arc_constraint) {
+                    Point mid = arc.Position(arc.length/2);
+                    SolidBrush midbrush = new SolidBrush(Color.DarkCyan); 
+                    int rad = 20;
+                    graphics.FillEllipse(midbrush, mid.X-rad/2, -mid.Y-rad/2, rad, rad); // Transform from map to screen
+                }
+
             }
-            // graphics.DrawArc(RegularPen, position.X, position.Y, position.X, position.Y, 45, 270);
         }
         public static Bitmap RotateImage(Bitmap b, double angle)
         {
@@ -64,16 +69,6 @@ namespace AppLayer.PathComponents
                 g.DrawImage(b, new Point(0, 0));
             }
             return returnBitmap;
-        }
-        internal void DrawBezierCurve(Pen pen, Graphics g)
-        {
-            var LinePath = new GraphicsPath();
-            var p1 = new Point(position.X, position.Y); //starting point
-            var p2 = new Point(position.X + 50, position.X + 50); //first control point
-            var p3 = new Point(position.X + 50, position.X + 50); //second control point
-            var p4 = new Point(next.X, next.Y); //ending point
-            LinePath.AddBezier(p1, p3, p3, p4);
-            g.DrawPath(pen, LinePath);
         }
     }
 }

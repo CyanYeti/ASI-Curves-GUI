@@ -25,7 +25,8 @@ namespace AppLayer.Commands
         public override bool Execute()
         {
             if (TargetDrawing == null) return false;
-            TargetDrawing.Add(new PathComponents.Node(_position, _heading));
+            Point pos = new(_position.X, -_position.Y); // Transform from screen to map
+            TargetDrawing.Add(new PathComponents.Node(pos, _heading));
             return true;
         }
     }
