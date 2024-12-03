@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+// using Asi;
+
 namespace AppLayer.PathComponents
 {
     public class PathDrawing
@@ -29,6 +31,18 @@ namespace AppLayer.PathComponents
                 // of each node and generate arcs. It may also modify the heading and/or curvature of each node.
                 // For now fake something: Draw arcs between even to odd indexed nodes. Draw straight line between
                 // odd to even indexed nodes
+                // *******************************************************************************************
+                // var nodes = new List<Asi.CoverageLibraries.SegmentState>();
+                // foreach (var node in _nodes) {
+                //     var point = new Asi.CoverageLibraries.Point2D(node.position.X, node.position.Y);
+                //     nodes.Add(new Asi.CoverageLibraries.SegmentState(point, node.heading, node.curvature));
+                // }
+                // var results = Asi.CoverageLibraries.ClothoidGeometry.ArcCloFromNodes(nodes.ToArray(), 20, _is_closed_loop);
+                // foreach (var tup in results) {
+                //     Console.WriteLine("HI");
+                //     // tup.Item1;
+                //     // tup.Item2;
+                // }
                 // *******************************************************************************************
                 double VERY_SMALL_CURVATURE = 1.0e-6;                         // (1/m)
                 if (_nodes.Count > 1) {

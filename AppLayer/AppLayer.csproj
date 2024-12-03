@@ -23,4 +23,16 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <!-- <ItemGroup>
+    <Reference Include="Asi.CoverageLibraries">
+      <HintPath>..\Asi.CoverageLibraries.Shared.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\Ijwhost.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup> -->
+
 </Project>

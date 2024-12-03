@@ -1,0 +1,24 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "dotnet",
+			"task": "build ${workspaceFolder}\\ASI-Curves-GUI\\ASI-Curves-GUI.csproj",
+			"file": "${workspaceFolder}\\ASI-Curves-GUI\\ASI-Curves-GUI.csproj",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": [],
+			"label": "dotnet: build ${workspaceFolder}\\ASI-Curves-GUI\\ASI-Curves-GUI.csproj"
+		},
+		{
+			"type": "dotnet",
+			"task": "clean",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "dotnet: clean"
+		}
+	]
+} 
+// dotnet build C:\Users\nate.bunderson\Documents\hackathon\ASI-Curves-GUI\ASI-Curves-GUI.sln /property:GenerateFullPaths=true /consoleloggerparameters:NoSummary /p:Configuration=Debug /p:Platform="x64"
