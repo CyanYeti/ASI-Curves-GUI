@@ -9,7 +9,7 @@ namespace AppLayer.Commands
 {
     public class Invoker
     {
-        private Thread _worker;
+        private Thread? _worker;
         private bool _keepGoing;
 
         private readonly ConcurrentQueue<Command> _todoQueue = new ConcurrentQueue<Command>();

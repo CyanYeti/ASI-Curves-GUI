@@ -3,14 +3,24 @@
 	"tasks": [
 		{
 			"type": "dotnet",
-			"task": "build ${workspaceFolder}\\ASI-Curves-GUI\\ASI-Curves-GUI.csproj",
-			"file": "${workspaceFolder}\\ASI-Curves-GUI\\ASI-Curves-GUI.csproj",
+			"task": "build ASI-Curves-GUI",
+			"file": "${workspaceFolder}\\ASI-Curves-GUI.sln",
+			"options": {
+				"shell": {
+					"args": [
+						"/property:GenerateFullPaths=true",
+					 	"/consoleloggerparameters:NoSummary",
+						"/p:Configuration=Debug",
+						"/p:Platform=\"x64\""
+					]
+				}
+			},
 			"group": {
 				"kind": "build",
 				"isDefault": true
 			},
 			"problemMatcher": [],
-			"label": "dotnet: build ${workspaceFolder}\\ASI-Curves-GUI\\ASI-Curves-GUI.csproj"
+			"label": "dotnet: build"
 		},
 		{
 			"type": "dotnet",

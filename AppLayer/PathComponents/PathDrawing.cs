@@ -1,9 +1,12 @@
-﻿using System;
+﻿// #define ASIAVAILABLE
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-// using Asi;
+#if ASIAVAILABLE
+using Asi;
+#endif
 
 namespace AppLayer.PathComponents
 {
@@ -27,23 +30,39 @@ namespace AppLayer.PathComponents
                 graphics.Clear(Color.White);
                 // Set any backgrounds
 
-                // Will be a call to clothoid library. The libary will take the position heading and curvature
+#if ASIAVAILABLE
+                // *******************************************************************************************
+                // Call to clothoid library. The libary will take the position heading and curvature
                 // of each node and generate arcs. It may also modify the heading and/or curvature of each node.
                 // For now fake something: Draw arcs between even to odd indexed nodes. Draw straight line between
                 // odd to even indexed nodes
+                var nodes = new List<Asi.CoverageLibraries.SegmentState>();
+                foreach (var node in _nodes) {
+                    var point = new Asi.CoverageLibraries.Point2D(node.position.X, node.position.Y);
+                    nodes.Add(new Asi.CoverageLibraries.SegmentState(point, node.heading, node.curvature));
+                }
+                var results = Asi.CoverageLibraries.ClothoidGeometry.ArcCloFromNodes(nodes.ToArray(), 20, _is_closed_loop);
+                if (_nodes.Count == results.Length) {
+                    var i = 0;
+                    foreach (var tup in results) {
+                        // Update position, heading, curvature of each node
+                        _nodes[i].position.X = (int)tup.Item1.XY.X;
+                        _nodes[i].position.Y = (int)tup.Item1.XY.Y;
+                        _nodes[i].heading = tup.Item1.Heading;
+                        _nodes[i].curvature = tup.Item1.Curvature;
+                        // Set constraint based on number of arcs, (TODO: Maybe get explicitly at some point)
+                        _nodes[i].arc_constraint = tup.Item2.Length == 1;
+                        // Clear and read new arcs
+                        _nodes[i].arcs.Clear();
+                        foreach (var seg in tup.Item2) {
+                            _nodes[i].arcs.Add(new Arc(new Point((int)seg.StartX, (int)seg.StartY), seg.InitialHeading, seg.InitialCurvature, seg.Length));
+                        }
+                        // Console.WriteLine("X={0:F} Y={1:F} Narcs={2:D}", tup.Item1.XY.X, tup.Item1.XY.Y,tup.Item2.Length);
+                        i += 1;
+                    }
+                }
                 // *******************************************************************************************
-                // var nodes = new List<Asi.CoverageLibraries.SegmentState>();
-                // foreach (var node in _nodes) {
-                //     var point = new Asi.CoverageLibraries.Point2D(node.position.X, node.position.Y);
-                //     nodes.Add(new Asi.CoverageLibraries.SegmentState(point, node.heading, node.curvature));
-                // }
-                // var results = Asi.CoverageLibraries.ClothoidGeometry.ArcCloFromNodes(nodes.ToArray(), 20, _is_closed_loop);
-                // foreach (var tup in results) {
-                //     Console.WriteLine("HI");
-                //     // tup.Item1;
-                //     // tup.Item2;
-                // }
-                // *******************************************************************************************
+#else
                 double VERY_SMALL_CURVATURE = 1.0e-6;                         // (1/m)
                 if (_nodes.Count > 1) {
                     Node n2 = _nodes[0];
@@ -77,7 +96,7 @@ namespace AppLayer.PathComponents
                         }
                     }
                 }
-                // *******************************************************************************************
+#endif
 
                 // Draw each node
                 foreach (var n in _nodes)

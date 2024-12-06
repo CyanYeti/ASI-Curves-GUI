@@ -5,11 +5,14 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "C#: ASI-Curves Debug",
-            "type": "dotnet",
+            "name": ".NET Core Launch (console)",
+            "type": "coreclr",
             "request": "launch",
-            "projectPath": "${workspaceFolder}/ASI-Curves-GUI/ASI-Curves-GUI.csproj"
+            "program": "${workspaceFolder}/ASI-Curves-GUI/bin/x64/Debug/net8.0-windows/ASI-Curves-GUI.exe",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": true,
+            "console": "internalConsole"
         }
-
     ]
 }

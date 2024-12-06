@@ -9,7 +9,7 @@ namespace AppLayer.Commands
 {
     public class CommandFactory
     {
-        private static CommandFactory _instance;
+        private static CommandFactory? _instance;
         private static readonly object _mylock = new object();
 
         private CommandFactory() { }
@@ -52,7 +52,7 @@ namespace AppLayer.Commands
                     break;
             }
 
-            if (command != null)
+            if (command != null && Invoker != null)
             {
                 command.TargetDrawing = TargetDrawing;
                 Invoker.EnqueueCommandForExecution(command);

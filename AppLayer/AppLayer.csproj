@@ -23,16 +23,16 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <!-- <ItemGroup>
+  <ItemGroup Condition="Exists('..\Asi.CoverageLibraries.Shared.dll')">
     <Reference Include="Asi.CoverageLibraries">
       <HintPath>..\Asi.CoverageLibraries.Shared.dll</HintPath>
     </Reference>
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="Exists('..\Ijwhost.dll')">
     <Content Include="..\Ijwhost.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup> -->
+  </ItemGroup>
 
 </Project>
